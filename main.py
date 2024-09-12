@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from cleaningData import *
+from cleanData import *
 
 
 df = pd.read_csv("data/train.csv",low_memory=False)
@@ -64,8 +64,10 @@ df['Dogum Yeri'] = df['Dogum Yeri'].apply(process_dogum_yeri)
 # df['Kardes Sayisi'] = df['Kardes Sayisi'].fillna('Bilinmiyor')
 # df.fillna("Bilinmiyor", inplace=True)
 
+excluded_columns = ['Dogum Tarihi']
 string_columns = df.select_dtypes(include=['object']).columns
-df[string_columns] = df[string_columns].fillna("Bilinmiyor", inplace=False)
+columns_to_fill = [col for col in string_columns if col not in excluded_columns]
+df[columns_to_fill] = df[columns_to_fill].fillna("Bilinmiyor", inplace=False)
 
 df = df.reset_index(drop=True)
 df.to_csv("cleanedData.csv",index=False)
