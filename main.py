@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from cleanData import *
+from cleaningData import *
 
 
 df = pd.read_csv("data/train.csv",low_memory=False)
